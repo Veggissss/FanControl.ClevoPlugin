@@ -7,34 +7,21 @@
     <ProjectGuid>{97345F0C-C3A3-4BB5-BFDD-11C34C7EA819}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FanControl.DellPlugin</RootNamespace>
-    <AssemblyName>FanControl.DellPlugin</AssemblyName>
+    <RootNamespace>FanControl.ClevoPlugin</RootNamespace>
+    <AssemblyName>FanControl.ClevoPlugin</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DellSmbiosBzhLib, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dlls\DellSmbiosBzhLib.dll</HintPath>
-    </Reference>
     <Reference Include="FanControl.Plugins, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dlls\FanControl.Plugins.dll</HintPath>
@@ -49,17 +36,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DellPlugin.cs" />
-    <Compile Include="DellFanManagementControlSensor.cs" />
-    <Compile Include="DellFanManagementFanSensor.cs" />
+    <Compile Include="ClevoPlugin.cs" />
+    <Compile Include="ClevoFanManagementControlSensor.cs" />
+    <Compile Include="ClevoFanManagementFanSensor.cs" />
+    <Compile Include="FanController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Dlls\bzh_dell_smm_io_x64.sys">
-      <Link>bzh_dell_smm_io_x64.sys</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Dlls\DellSmbiosBzhLib.dll" />
     <Content Include="Dlls\FanControl.Plugins.dll" />
     <Content Include="Dlls\FanControl.Plugins.xml" />
   </ItemGroup>

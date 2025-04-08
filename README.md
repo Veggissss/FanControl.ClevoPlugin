@@ -1,25 +1,21 @@
-# FanControl.DellPlugin [![Build status](https://ci.appveyor.com/api/projects/status/aqevcsrb976mavdo/branch/master?svg=true)](https://ci.appveyor.com/project/Rem0o/fancontrol-dellplugin/branch/master)
+# FanControl.ClevoPlugin
 
-Plugin for [FanControl](https://github.com/Rem0o/FanControl.Releases) that provides support for Dell laptops using [DellFanManagement](https://github.com/AaronKelley/DellFanManagement).
+Plugin for [FanControl](https://github.com/Rem0o/FanControl.Releases) that provides support for Clevo laptops using ClevoEcInfo.dll.
+
+[DellPlugin](https://github.com/Rem0o/FanControl.DellPlugin) was used as a template for creating the plugin.
+
+Fan control code credit:
+https://github.com/oleuzop/OptimizedClevoFan
+
+Which was based on the work from:
+https://github.com/djsubtronic/ClevoFanControl
 
 ## To install
 
-Do one of the following:
-* Download the latest binaries from [AppVeyor](https://ci.appveyor.com/project/Rem0o/fancontrol-dellplugin/branch/master/artifacts)
-* Download the latest [release](https://github.com/Rem0o/FanControl.DellPlugin/releases)
+* Install https://aka.ms/dotnet-core-applaunch?missing_runtime=true&arch=x86&rid=win10-x86&apphost_version=6.0.8
+* Download and install the NTPort driver from the `OptimizedClevoFan` repo: https://github.com/djsubtronic/ClevoFanControl/blob/master/ClevoFanControl/NTPortDrvSetup.exe
+* Download the latest release zip.
 * Compile the solution.
 
 * And use the "install plugin" button in FanControl or copy all the content of the plugin's zip into FanControl's "plugins" folder.
-You might need to "unlock" the plugin dll in their properties.
-
-## Special note
-
-Setting this registry key might be required on your machine, with a reboot, see <br>
-* [http://forum.notebookreview.com/threads/dellfanmanagement-dellfankeepalive-%E2%80%93-tools-for-managing-the-fan-speed-in-dell-laptops.833340/ ](https://web.archive.org/web/20211121044820/http://forum.notebookreview.com/threads/dellfanmanagement-dellfankeepalive-%E2%80%93-tools-for-managing-the-fan-speed-in-dell-laptops.833340/)
-* https://www.geoffchappell.com/notes/security/whqlsettings/index.htm
-
-```
-[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CI\Policy]
-"UpgradedSystem"=dword:00000000
-```
 
