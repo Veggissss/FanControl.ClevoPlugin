@@ -32,7 +32,7 @@ jobs:
       - name: Copy ControlServer output to ClevoPlugin /Server subfolder
         run: |
           $clevoPath = "ClevoPlugin\\bin\\${{ env.CONFIGURATION }}"
-          $controlPath = "ControlServer\\bin\\x86\\${{ env.CONFIGURATION }}"
+          $controlPath = "ControlServer\\bin\\x86\\${{ env.CONFIGURATION }}\\net6.0-windows"
           $destServerPath = "$clevoPath\\Server"
           New-Item -ItemType Directory -Force -Path $destServerPath
           Copy-Item "$controlPath\\*" -Destination $destServerPath -Recurse -Force
