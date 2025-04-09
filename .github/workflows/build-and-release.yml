@@ -21,13 +21,13 @@ jobs:
         uses: microsoft/setup-msbuild@v1.3.1
 
       - name: Restore NuGet packages
-        run: msbuild FanControlPlugin.sln /t:Restore
+        run: msbuild FanControl.ClevoPlugin.sln /t:Restore
 
       - name: Build ClevoPlugin (AnyCPU)
-        run: msbuild FanControlPlugin.sln /p:Configuration=${{ env.CONFIGURATION }} /p:Platform="Any CPU" /t:Build /p:BuildProjectReferences=false /p:Projects="ClevoPlugin\\ClevoPlugin.csproj"
+        run: msbuild FanControl.ClevoPlugin.sln /p:Configuration=${{ env.CONFIGURATION }} /p:Platform="Any CPU" /t:Build /p:BuildProjectReferences=false /p:Projects="ClevoPlugin\\ClevoPlugin.csproj"
 
       - name: Build ControlServer (x86)
-        run: msbuild FanControlPlugin.sln /p:Configuration=${{ env.CONFIGURATION }} /p:Platform="x86" /t:Build /p:BuildProjectReferences=false /p:Projects="ControlServer\\ControlServer.csproj"
+        run: msbuild FanControl.ClevoPlugin.sln /p:Configuration=${{ env.CONFIGURATION }} /p:Platform="x86" /t:Build /p:BuildProjectReferences=false /p:Projects="ControlServer\\ControlServer.csproj"
 
       - name: Copy ControlServer output to ClevoPlugin /Server subfolder
         run: |
