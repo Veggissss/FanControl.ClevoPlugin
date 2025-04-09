@@ -6,49 +6,69 @@ namespace FanControl.Server
     public class Server
     {
         private static readonly FanControl _fanControl = new();
+        private static bool _isDisposed = false;
 
         static void Main(string[] args)
         {
-            while (true) 
+            while (!_isDisposed) 
             {
                 using var pipeServer = new NamedPipeServerStream("FanControlPipe", PipeDirection.InOut);
                 Console.WriteLine("Waiting for connection...");
                 pipeServer.WaitForConnection();
-                Console.WriteLine("Client request!");
 
                 // Handle the incoming request
-                StreamReader reader;
-                StreamWriter writer;
-                reader = new StreamReader(pipeServer, Encoding.UTF8);
-                writer = new StreamWriter(pipeServer, Encoding.UTF8);
-                
-                var request = reader.ReadLine();
+                StreamReader reader = new (pipeServer, Encoding.UTF8);
+                StreamWriter writer = new (pipeServer, Encoding.UTF8);
+
+                string request = ReadLine(reader);
                 Console.WriteLine("Received request: " + request);
 
-                // Assuming the request is a function name or action to trigger
-                if (request == "SetFanSpeed")
+                switch (request) 
                 {
-                    string fanNrArg = reader.ReadLine();
-                    Console.WriteLine(fanNrArg);
-                    var fanNr = int.Parse(fanNrArg);
+                    case "SetFanSpeed":
+                        int fanNr = int.Parse(ReadLine(reader));
 
-                    string fanSpeedArg = reader.ReadLine();
-                    Console.WriteLine(fanSpeedArg);
-                    var fanSpeedPercentage = double.Parse(fanSpeedArg, System.Globalization.CultureInfo.InvariantCulture);
+                        // Handle gobal number seperator '.' vs ','
+                        double fanSpeedPercentage = double.Parse(ReadLine(reader), System.Globalization.CultureInfo.InvariantCulture);
 
-                    SetFanSpeed(fanNr, fanSpeedPercentage);
-                    writer.WriteLine("Fan speed set");
-                    writer.Flush();
-                }
-                else if (request == "SetFanSpeedAuto")
-                {
-                    string fanNrArg = reader.ReadLine();
-                    var fanNr = int.Parse(fanNrArg);
-                    SetFansAuto(fanNr);
-                    writer.WriteLine($"Fan {fanNr} speed set to auto");
-                    writer.Flush();
+                        SetFanSpeed(fanNr, fanSpeedPercentage);
+
+                        WriteLine(writer, $"Fan nr {fanNr} speed set to {fanSpeedPercentage}%");
+                        break;
+
+                    case "SetFanSpeedAuto":
+                        int autoFanNr = int.Parse(ReadLine(reader));
+                        SetFansAuto(autoFanNr);
+
+                        WriteLine(writer, $"Fan {autoFanNr} speed set to auto");
+                        break;
+
+                    case "Shutdown":
+                        WriteLine(writer, "Shutting down server");
+                        _isDisposed = true;
+                        break;
+
+                    default:
+                        WriteLine(writer, "Unknown command");
+                        break;
                 }
             }
+        }
+
+        private static string ReadLine(StreamReader reader)
+        {
+            string? line = reader.ReadLine();
+            if (line == null)
+            {
+                throw new EndOfStreamException("End of stream reached, line is null.");
+            }
+            return line;
+        }
+
+        private static void WriteLine(StreamWriter writer, string message)
+        {
+            writer.WriteLine(message);
+            writer.Flush();
         }
 
         private static void SetFanSpeed(int fanNr, double fanSpeedPercentage)

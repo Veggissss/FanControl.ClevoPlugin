@@ -12,12 +12,11 @@ namespace FanControl.DellPlugin
 
         public void Close()
         {
-            
+            _fanControl = null;
         }
 
         public void Initialize()
         {
-            // Create interface to communicate with fans
             _fanControl = new FanController();
         }
 
@@ -40,16 +39,12 @@ namespace FanControl.DellPlugin
         {
             if (disposing)
             {
-                // TODO: dispose managed state (managed objects)
+                // Dispose managed state (managed objects)
                 _fanControl.Dispose();
             }
-
-            // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-            // TODO: set large fields to null
             Close();
         }
 
-        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
          ~ClevoPlugin()
          {
              // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method

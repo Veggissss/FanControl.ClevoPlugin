@@ -12,26 +12,23 @@ namespace FanControl.DellPlugin
 
         public FanController()
         {
-            // Start the 32-bit server process
+            // Start the 32-bit IPC server
             ProcessStartInfo startInfo = new ProcessStartInfo
             {
                 FileName = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\Server\\ControlServer.exe",
-                UseShellExecute = false
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                WindowStyle = ProcessWindowStyle.Hidden,
             };
-
-            // Allow time for server start
             _serverProcess = Process.Start(startInfo);
 
             // Wait for server start
-            System.Threading.Thread.Sleep(500);
-
+            System.Threading.Thread.Sleep(200);
             Console.WriteLine("Fan Control Server started.");
         }
 
         public string Communicate(params string[] lines)
         {
-            Console.WriteLine($"Sending {lines.Length} lines to pipe...");
-
             using (var pipeClient = new NamedPipeClientStream(".", "FanControlPipe", PipeDirection.InOut))
             {
                 pipeClient.Connect();
@@ -63,10 +60,17 @@ namespace FanControl.DellPlugin
             Console.WriteLine(response);
         }
 
+        private void ShutdownServer()
+        {
+            var response = Communicate("Shutdown");
+            Console.WriteLine(response);
+        }
+
         public void Dispose()
         {
-            // Close server app
-            _serverProcess.Close();
+            // Close server
+            ShutdownServer();
+            _serverProcess.WaitForExit();
         }
     }
 }
