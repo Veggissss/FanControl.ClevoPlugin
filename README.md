@@ -1,12 +1,12 @@
 # FanControl.ClevoPlugin
 
-A plugin for [FanControl](https://github.com/Rem0o/FanControl.Releases) that provides support for Clevo laptops using `ClevoEcInfo.dll`.
+A plugin for [FanControl](https://github.com/Rem0o/FanControl.Releases) that provides fan control support for Clevo laptops by using `ClevoEcInfo.dll`.
 
 ## Credits
 
-- **Plugin Template**: Based on the [DellPlugin](https://github.com/Rem0o/FanControl.DellPlugin).
 - **Fan Control Code**: Credit to [oleuzop's OptimizedClevoFan](https://github.com/oleuzop/OptimizedClevoFan) for the fan control logic.
   - This work is based on [djsubtronic's ClevoFanControl](https://github.com/djsubtronic/ClevoFanControl).
+- **Plugin Template**: Based on the [DellPlugin](https://github.com/Rem0o/FanControl.DellPlugin).
 
 ## Installation
 
@@ -28,8 +28,12 @@ Follow these steps to install the ClevoPlugin:
 
 ## Building
 
-Since the `ClevoEcInfo.dll` is 32-bit, so make sure to compile the `ControlServer` as a x86.
-The `ControlServer` output files should be placed in a `Server/` folder.
+The `ClevoEcInfo.dll` is 32-bit, so make sure to compile the `ControlServer` as a `x86`.
+The `ControlServer` output files should be placed in a `Server/` subfolder in the `ClevoPlugin` output.
+
+`FanControl` does not support 32-bit plugins, so the `ClevoPlugin` should be compiled as `Any Cpu` or `x64`. 
+This is why an IPC approach was needed to communicate with the `ClevoEcInfo.dll`. 
+More info on 32-bit/64-bit dll IPC can be found [here](https://blog.mattmags.com/2007/06/30/accessing-32-bit-dlls-from-64-bit-code/)
 
 ## License
 
